@@ -14,8 +14,14 @@ app.get("/:uuid", async (req, res) => {
       const findResult = await url.findOne({
         _id: uuid,
       });
-
-      res.redirect(findResult.url);
+      if(findResult)
+      {
+        res.redirect(findResult.url);
+      }
+      else {
+        res.render("index", { error: "Page not found" });
+      }
+      
     } finally {
       await client.close();
     }
